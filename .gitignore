@@ -123,4 +123,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# virtual environment
 venv/
+
+# vscode stash
+.vscode/
