@@ -53,10 +53,10 @@ def main():
     select_option(driver, 'studyWeeks', WEEK)
 
     
-    print_link = WebDriverWait(driver, 10).until(ec.visibility_of_element_located(
-        (By.ID, 'printReport')))
-    print(print_link.text)
-    
+    print_link = WebDriverWait(driver, 10).until(lambda d: d.find_element_by_id('printReport'))
+
+    print(print_link.get_attribute("innerHTML"))
+
     time.sleep(3)
 
     driver.close()
