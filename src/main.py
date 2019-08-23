@@ -2,7 +2,8 @@ import os
 from util import get_root, wait_file, build_schedule_name
 from scheduleParser import ScheduleParser
 from schedule import Schedule
-
+import shutil
+import pandas as pd
 
 SCHEDULE_URL = 'http://raspisanie.mslu.by/schedule/reports/publicreports/schedulelistforgroupreport'
 FACULTY = 'Переводческий'
@@ -13,19 +14,30 @@ G1 = '308/1 ан-араб'
 WEEK = '1 сентября - 8 сентября'
 
 
+def process_schedule(schedule_file):
+    schedule_data = pd.read_excel(schedule_file)
+    print(schedule_data.head())
+
+
+def write_new_schedule(folder, file_name, new_file):
+    wait_file(folder, file_name)
+    shutil.move(os.path.join(folder, file_name), new_file)
+
+
 def main():
     schedule = Schedule(FACULTY, COURSE, YEARS, G1, WEEK)
-    
-    parser = ScheduleParser(SCHEDULE_URL, get_root())
-    with parser:
-        parser.get_schedule(schedule)
 
-    wait_file(
-        get_root(),
-        'scheduleGroup.xls',
-        os.path.join(get_root(), 'schedules'),
-        build_schedule_name(schedule)
-    )
+    #parser = ScheduleParser(SCHEDULE_URL, get_root())
+    #with parser:
+    #    parser.get_schedule(schedule)
+
+    schedule_path = os.path.join(get_root(), 'schedules')
+    schedule_name = build_schedule_name(schedule)
+    schedule_file = os.path.join(schedule_path, schedule_name)
+
+    #write_new_schedule(get_root(), 'scheduleGroup.xls', schedule_file)
+
+    process_schedule(schedule_file)
 
 
 if __name__ == "__main__":
