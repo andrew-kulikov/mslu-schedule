@@ -1,15 +1,9 @@
 import os
-import shutil
 
 from schedule import Schedule
 from scheduleParser import ScheduleParser
 from defaultLoader import get_settings
-from util import get_root, wait_file, build_schedule_name
-
-
-def copy_file(folder, file_name, new_file):
-    wait_file(folder, file_name)
-    shutil.move(os.path.join(folder, file_name), new_file)
+from util import get_root, copy_file, build_schedule_name
 
 
 def main():

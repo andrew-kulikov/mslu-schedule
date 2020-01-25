@@ -1,5 +1,7 @@
-import time
 import os
+import time
+import shutil
+
 from schedule import Schedule
 
 
@@ -23,3 +25,8 @@ def build_schedule_name(schedule: Schedule) -> str:
 
 def prepare_file_name(file_name: str) -> str:
     return file_name.replace('/', '_').replace(' ', '_')
+
+
+def copy_file(folder, file_name, new_file):
+    wait_file(folder, file_name)
+    shutil.move(os.path.join(folder, file_name), new_file)
