@@ -1,16 +1,10 @@
 import os
-from util import get_root, wait_file, build_schedule_name
-from scheduleParser import ScheduleParser
-from schedule import Schedule
 import shutil
-import pandas as pd
 
-SCHEDULE_URL = 'http://raspisanie.mslu.by/schedule/reports/publicreports/schedulelistforgroupreport'
-FACULTY = 'Переводческий'
-COURSE = '3'
-YEARS = '2019/2020'
-GROUP = '303/2 ан-нем'
-WEEK = '1 сентября - 8 сентября'
+from schedule import Schedule
+from scheduleParser import ScheduleParser
+from defaultLoader import get_settings
+from util import get_root, wait_file, build_schedule_name
 
 
 def write_new_schedule(folder, file_name, new_file):
@@ -19,9 +13,10 @@ def write_new_schedule(folder, file_name, new_file):
 
 
 def main():
-    schedule = Schedule(FACULTY, COURSE, YEARS, GROUP, WEEK)
+    schedule_url, faculty, course, years, group, week = get_settings()
+    schedule = Schedule(faculty, course, years, group, week)
 
-    parser = ScheduleParser(SCHEDULE_URL, get_root())
+    parser = ScheduleParser(schedule_url, get_root())
     with parser:
         parser.get_schedule(schedule)
 
