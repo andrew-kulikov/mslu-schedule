@@ -41,7 +41,7 @@ class ScheduleParser:
         all_options = element.find_elements_by_tag_name('option')
 
         for option in all_options:
-            print('{0} : {1}'.format(option.text, option.get_attribute('value')))
+            print('{0}'.format(option.text))
 
         Select(element).select_by_visible_text(text)
 

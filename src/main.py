@@ -10,7 +10,6 @@ FACULTY = 'Переводческий'
 COURSE = '3'
 YEARS = '2019/2020'
 GROUP = '303/2 ан-нем'
-G1 = '308/1 ан-араб'
 WEEK = '1 сентября - 8 сентября'
 
 
@@ -25,17 +24,17 @@ def write_new_schedule(folder, file_name, new_file):
 
 
 def main():
-    schedule = Schedule(FACULTY, COURSE, YEARS, G1, WEEK)
+    schedule = Schedule(FACULTY, COURSE, YEARS, GROUP, WEEK)
 
-    #parser = ScheduleParser(SCHEDULE_URL, get_root())
-    #with parser:
-    #    parser.get_schedule(schedule)
+    parser = ScheduleParser(SCHEDULE_URL, get_root())
+    with parser:
+        parser.get_schedule(schedule)
 
     schedule_path = os.path.join(get_root(), 'schedules')
     schedule_name = build_schedule_name(schedule)
     schedule_file = os.path.join(schedule_path, schedule_name)
 
-    #write_new_schedule(get_root(), 'scheduleGroup.xls', schedule_file)
+    write_new_schedule(get_root(), 'scheduleGroup.xls', schedule_file)
 
     process_schedule(schedule_file)
 
