@@ -7,7 +7,7 @@ from defaultLoader import get_settings
 from util import get_root, wait_file, build_schedule_name
 
 
-def write_new_schedule(folder, file_name, new_file):
+def copy_file(folder, file_name, new_file):
     wait_file(folder, file_name)
     shutil.move(os.path.join(folder, file_name), new_file)
 
@@ -24,7 +24,7 @@ def main():
     schedule_name = build_schedule_name(schedule)
     schedule_file = os.path.join(schedule_path, schedule_name)
 
-    write_new_schedule(get_root(), 'scheduleGroup.xls', schedule_file)
+    copy_file(get_root(), 'scheduleGroup.xls', schedule_file)
 
 
 if __name__ == "__main__":
