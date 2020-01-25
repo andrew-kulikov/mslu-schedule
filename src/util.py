@@ -19,10 +19,6 @@ def wait_file(folder, file_name):
             break
 
 
-def build_schedule_name(schedule: Schedule) -> str:
-    return prepare_file_name(schedule.faculty + schedule.course + schedule.years + schedule.group + schedule.week + '.xls')
-
-
 def prepare_file_name(file_name: str) -> str:
     return file_name.replace('/', '_').replace(' ', '_')
 

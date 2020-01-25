@@ -1,9 +1,8 @@
-import os
-
 from schedule import Schedule
 from scheduleParser import ScheduleParser
 from defaultLoader import get_settings
-from util import get_root, copy_file, build_schedule_name
+from util import get_root
+from scheduleFileUtils import save
 
 
 def main():
@@ -14,11 +13,7 @@ def main():
     with parser:
         parser.get_schedule(schedule)
 
-    schedule_path = os.path.join(get_root(), 'schedules')
-    schedule_name = build_schedule_name(schedule)
-    schedule_file = os.path.join(schedule_path, schedule_name)
-
-    copy_file(get_root(), 'scheduleGroup.xls', schedule_file)
+    save('schedules', 'scheduleGroup.xls', schedule)
 
 
 if __name__ == "__main__":
