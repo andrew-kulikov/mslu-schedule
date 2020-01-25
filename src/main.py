@@ -13,11 +13,6 @@ GROUP = '303/2 ан-нем'
 WEEK = '1 сентября - 8 сентября'
 
 
-def process_schedule(schedule_file):
-    schedule_data = pd.read_excel(schedule_file)
-    print(schedule_data.head())
-
-
 def write_new_schedule(folder, file_name, new_file):
     wait_file(folder, file_name)
     shutil.move(os.path.join(folder, file_name), new_file)
@@ -35,8 +30,6 @@ def main():
     schedule_file = os.path.join(schedule_path, schedule_name)
 
     write_new_schedule(get_root(), 'scheduleGroup.xls', schedule_file)
-
-    process_schedule(schedule_file)
 
 
 if __name__ == "__main__":
