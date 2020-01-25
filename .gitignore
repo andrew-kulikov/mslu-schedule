@@ -128,3 +128,10 @@ venv/
 
 # vscode stash
 .vscode/
+
+.idea/
+
+*.xls
+*.tmp
+
+src/token.txt
