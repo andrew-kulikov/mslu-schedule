@@ -24,3 +24,8 @@ def save(folder_name: str, source_name: str, schedule: Schedule):
     schedule_file = os.path.join(schedule_path, schedule_name)
 
     copy_file(root_folder, source_name, schedule_file)
+
+
+def get_weeks():
+    with open('data/weeks.txt', 'r', encoding='utf-8') as f:
+        return f.read().splitlines()

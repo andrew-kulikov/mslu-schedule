@@ -2,10 +2,12 @@ from schedule import Schedule
 from scheduleParser import ScheduleParser
 from defaultLoader import get_settings
 from util import get_root
-from scheduleFileUtils import save
+from scheduleFileUtils import save, get_weeks
 
 
 def main():
+    print(get_weeks())
+    return
     schedule_url, faculty, course, years, group, week = get_settings()
     schedule = Schedule(faculty, course, years, group, week)
 
