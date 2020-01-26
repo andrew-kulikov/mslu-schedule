@@ -133,5 +133,6 @@ venv/
 
 *.xls
 *.tmp
+*.png
 
 src/token.txt
