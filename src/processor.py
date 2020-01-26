@@ -5,10 +5,8 @@ from util import get_root
 from scheduleFileUtils import save, get_weeks
 
 
-def main():
-    print(get_weeks())
-    return
-    schedule_url, faculty, course, years, group, week = get_settings()
+def load_week_schedule(week):
+    schedule_url, faculty, course, years, group, _ = get_settings()
     schedule = Schedule(faculty, course, years, group, week)
 
     parser = ScheduleParser(schedule_url, get_root())
@@ -19,4 +17,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    weeks = get_weeks()
+    load_week_schedule(weeks[0])
