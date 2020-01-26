@@ -12,9 +12,10 @@ def get_root() -> str:
 def wait_file(folder, file_name):
     time_to_wait = 10
     time_counter = 0
+    interval = 1
     while not os.path.exists(os.path.join(folder, file_name)):
-        time.sleep(1)
-        time_counter += 1
+        time.sleep(interval)
+        time_counter += interval
         if time_counter > time_to_wait:
             break
 
