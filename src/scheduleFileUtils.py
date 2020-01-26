@@ -28,4 +28,5 @@ def save(folder_name: str, source_name: str, schedule: Schedule):
 
 def get_weeks():
     with open('data/weeks.txt', 'r', encoding='utf-8') as f:
-        return f.read().splitlines()
+        lines = f.read().splitlines()
+        return [line for line in lines if not line.startswith('~')]
