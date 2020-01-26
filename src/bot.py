@@ -1,7 +1,11 @@
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
-from telegram import ChatAction
 from functools import wraps
+
+from telegram import ChatAction
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler, MessageHandler, Filters
+
+from scheduleFileUtils import get_weeks
+from processor import load_week_schedule
 
 
 def send_action(action):
@@ -11,7 +15,8 @@ def send_action(action):
         @wraps(func)
         def command_func(*args, **kwargs):
             bot, update = args
-            bot.send_chat_action(chat_id=update.effective_message.chat_id, action=action)
+            bot.send_chat_action(
+                chat_id=update.effective_message.chat_id, action=action)
             return func(bot, update, **kwargs)
 
         return command_func
@@ -28,18 +33,24 @@ dispatcher = updater.dispatcher
 
 @send_action(ChatAction.TYPING)
 def start_command(bot, update):
-    keyboard = [[InlineKeyboardButton("Option 1", callback_data='1'),
-                 InlineKeyboardButton("Option 2", callback_data='2')],
-                [InlineKeyboardButton("Option 3", callback_data='3')]]
+    weeks = get_weeks()
+
+    keyboard = [[InlineKeyboardButton(week, callback_data=week)] for week in weeks]
 
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Please choose:', reply_markup=reply_markup)
 
 
+@send_action(ChatAction.UPLOAD_PHOTO)
 def button(bot, update):
     query = update.callback_query
-    print(query)
-    query.edit_message_text(text="Selected option: {}".format(query.data))
+    week = query.data
+    query.edit_message_text(text="Загружаю расписание на неделю {} ...".format(week))
+    try:
+        loaded_image = load_week_schedule(week)
+        bot.send_photo(query.message.chat_id, photo=open(loaded_image, 'rb'))
+    except Exception as e:
+        bot.send_message(chat_id=query.message.chat_id, text='Расписание на данную неделю недоступно :(')
 
 
 @send_action(ChatAction.TYPING)

@@ -13,7 +13,9 @@ def load_week_schedule(week):
     with parser:
         parser.get_schedule(schedule)
 
-    save('schedules', 'scheduleGroup.xls', schedule)
+    saved_image_path = save('schedules', 'scheduleGroup.xls', schedule)
+
+    return saved_image_path
 
 
 if __name__ == "__main__":

@@ -7,6 +7,8 @@ from selenium.webdriver.support import expected_conditions as ec
 from schedule import Schedule
 import time
 
+from util import get_root, wait_file
+
 
 class ScheduleParser:
     def __init__(self, schedule_url: str, root_dir: str):
@@ -30,7 +32,7 @@ class ScheduleParser:
         self.started = True
 
     def stop(self):
-        self.driver.close()
+        self.driver.quit()
 
     def __select_option(self, select_name: str, text: str, wait: bool = False):
         if wait:
@@ -58,6 +60,8 @@ class ScheduleParser:
             lambda d: d.find_element_by_id('printReport'))
 
         print_link.click()
+
+        wait_file(get_root(), 'scheduleGroup.xls')
     
     def __enter__(self):
         self.start()
